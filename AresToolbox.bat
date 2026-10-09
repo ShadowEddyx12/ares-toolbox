@@ -1,36 +1,3 @@
-::[Bat To Exe Converter]
-::
-::YAwzoRdxOk+EWAjk
-::fBw5plQjdCyDJGyX8VAjFB5QWwWQAE+1EbsQ5+n//NamkGgua7NxcYzUug==
-::YAwzuBVtJxjWCl3EqQJgSA==
-::ZR4luwNxJguZRRnk
-::Yhs/ulQjdF+5
-::cxAkpRVqdFKZSDk=
-::cBs/ulQjdF+5
-::ZR41oxFsdFKZSDk=
-::eBoioBt6dFKZSDk=
-::cRo6pxp7LAbNWATEpCI=
-::egkzugNsPRvcWATEpCI=
-::dAsiuh18IRvcCxnZtBJQ
-::cRYluBh/LU+EWAnk
-::YxY4rhs+aU+IeA==
-::cxY6rQJ7JhzQF1fEqQJhZksaHGQ=
-::ZQ05rAF9IBncCkqN+0xwdVsFAlTMbAs=
-::ZQ05rAF9IAHYFVzEqQIROh5HDDCNM2e4Ca18
-::eg0/rx1wNQPfEVWB+kM9LVsJDCWQOXj6MroT5Or094o=
-::fBEirQZwNQPfEVWB+kM9LVsJDCWQOXja
-::cRolqwZ3JBvQF1fEqQJQ
-::dhA7uBVwLU+EWHiW8VFQ
-::YQ03rBFzNR3SWATElA==
-::dhAmsQZ3MwfNWATE1VA1O3s=
-::ZQ0/vhVqMQ3MEVWAtB9wSA==
-::Zg8zqx1/OA3MEVWAtB9wSA==
-::dhA7pRFwIByZRRnk
-::Zh4grVQjdCyDJGyX8VAjFB5QWwWQAE+1EbsQ5+n//NamsEgOFNYwd4PZ1azAJfgWig==
-::YB416Ek+ZW8=
-::
-::
-::978f952a14a936cc963da21a135fa983
 @echo off
 title ARES OS - Utility Toolbox
 :: Force UTF-8 encoding to support borders
@@ -61,6 +28,7 @@ echo %ESC%[36m│%ESC%[1;96m                    ARES OS  TOOLBOX                
 echo %ESC%[36m│%ESC%[90m                   Powered by Ares v1.0                  %ESC%[0m%ESC%[36m│%ESC%[0m
 echo %ESC%[36m├─────────────────────────────────────────────────────────┤%ESC%[0m
 echo %ESC%[36m│%ESC%[0m                                                         %ESC%[36m│%ESC%[0m
+echo %ESC%[36m│%ESC%[92m  [0]%ESC%[0m Install Winget Package Manager                     %ESC%[36m│%ESC%[0m
 echo %ESC%[36m│%ESC%[93m  [1]%ESC%[0m Web Browsers                                       %ESC%[36m│%ESC%[0m
 echo %ESC%[36m│%ESC%[93m  [2]%ESC%[0m Essential Apps (7-Zip, Notepad++, etc.)            %ESC%[36m│%ESC%[0m
 echo %ESC%[36m│%ESC%[93m  [3]%ESC%[0m Hardware Tools (HWiNFO, CPU-Z, etc.)               %ESC%[36m│%ESC%[0m
@@ -71,8 +39,9 @@ echo %ESC%[36m│%ESC%[91m  [7]%ESC%[0m Exit                                    
 echo %ESC%[36m│%ESC%[0m                                                         %ESC%[36m│%ESC%[0m
 echo %ESC%[36m└─────────────────────────────────────────────────────────┘%ESC%[0m
 echo.
-set /p choice="%ESC%[96m Select an option [1-7]: %ESC%[0m"
+set /p choice="%ESC%[96m Select an option [0-7]: %ESC%[0m"
 
+if "%choice%"=="0" goto install_winget
 if "%choice%"=="1" goto browsers
 if "%choice%"=="2" goto essentials
 if "%choice%"=="3" goto hwtools
@@ -80,6 +49,29 @@ if "%choice%"=="4" goto media
 if "%choice%"=="5" goto winlibs
 if "%choice%"=="6" goto cleanup
 if "%choice%"=="7" exit
+goto menu
+
+:install_winget
+cls
+echo %ESC%[36m┌────────────────────────────────────────────────────────┐%ESC%[0m
+echo %ESC%[36m│%ESC%[1;96m             INSTALL WINGET PACKAGE MANAGER             %ESC%[0m%ESC%[36m│%ESC%[0m
+echo %ESC%[36m└────────────────────────────────────────────────────────┘%ESC%[0m
+echo.
+echo %ESC%[96m[>] Installing Winget Package Manager...%ESC%[0m
+powershell -NoProfile -ExecutionPolicy Bypass -Command "irm https://raw.githubusercontent.com/asheroto/winget-installer/master/winget-install.ps1 | iex"
+
+:: FIX FONT / ANSI RESET: Ripristina i colori e la codifica della console
+echo %ESC%[0m
+chcp 65001 >nul
+
+echo.
+echo %ESC%[96m[>] Refreshing environment variables...%ESC%[0m
+set "PATH=%PATH%;%LOCALAPPDATA%\Microsoft\WindowsApps;C:\Program Files\WindowsApps"
+
+echo.
+echo %ESC%[92m[✓] Winget installation completed!%ESC%[0m
+echo.
+pause
 goto menu
 
 :browsers
